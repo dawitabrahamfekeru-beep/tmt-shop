@@ -115,14 +115,15 @@ a{color:inherit;text-decoration:none}
 .bagpip[hidden]{display:none}
 
 .hdr-2{background:var(--nav-2)}
-.hdr-2-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.hdr-2-in{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:9px 0}
 .hdr-2-in::-webkit-scrollbar{display:none}
 .hdr-2-in a{
-  color:#DCE4EC;font-size:13px;font-weight:500;white-space:nowrap;
-  padding:9px 12px;border:1px solid transparent;
+  color:#DCE4EC;font-size:13px;font-weight:600;white-space:nowrap;
+  padding:8px 16px;border:1px solid rgba(220,228,236,.26);border-radius:999px;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
 }
-.hdr-2-in a:hover{border-color:#4A5D74}
-.hdr-2-in a.on{background:var(--blue);color:#fff;font-weight:700}
+.hdr-2-in a:hover{background:rgba(220,228,236,.14);border-color:rgba(220,228,236,.6);color:#fff}
+.hdr-2-in a.on{background:var(--yellow);border-color:var(--yellow);color:var(--nav);font-weight:800}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -470,6 +471,69 @@ a{color:inherit;text-decoration:none}
   .searchwrap{order:5;flex-basis:100%}
   .sec{padding:14px}
 }
+
+/* ---------- film band ---------- */
+.film{display:none;position:relative;background:var(--nav);overflow:hidden;
+  height:clamp(430px,70vh,660px)}
+.film.show{display:block}
+.film .vid{position:absolute;inset:0;z-index:0}
+.film .vid video{width:100%;height:100%;object-fit:cover;display:block}
+.film .scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(14,27,42,.93) 0%,rgba(14,27,42,.74) 42%,rgba(14,27,42,.32) 72%,rgba(14,27,42,.42) 100%)}
+.film .shell{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center}
+.film .eb{font-size:11.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+.film h2{color:#fff;font-size:clamp(30px,5.4vw,60px);font-weight:900;line-height:1;letter-spacing:-.03em;
+  margin:14px 0 0;font-stretch:112%;max-width:17ch;text-wrap:balance}
+.film p{color:#D6E7FA;font-size:15px;margin:14px 0 0;max-width:44ch}
+.film .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.film .watch{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 20px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.42);color:#fff;
+  font-size:13px;font-weight:800;letter-spacing:.02em;transition:background .18s ease}
+.film .watch:hover{background:rgba(255,255,255,.26)}
+.film .facts{display:grid;grid-template-columns:repeat(2,auto);gap:14px 30px;margin-top:30px;
+  justify-content:start;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;max-width:520px}
+.film .facts b{display:block;color:#fff;font-size:21px;font-weight:900;letter-spacing:-.02em;line-height:1}
+.film .facts span{display:block;color:#9FB0C2;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
+@media (min-width:700px){.film .facts{grid-template-columns:repeat(4,auto)}}
+@media (max-width:640px){
+  .film{height:clamp(380px,78vh,520px)}
+  .film p{display:none}
+}
+@media (prefers-reduced-motion:reduce){.film .watch{transition:none}}
+
+/* ---------- department pills ---------- */
+/* ---------- video lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:22px;
+  background:rgba(8,14,22,.92);opacity:0;pointer-events:none;transition:opacity .22s ease}
+.lb.on{opacity:1;pointer-events:auto}
+.lb-in{width:min(1060px,100%);aspect-ratio:16/9;background:#000;position:relative}
+.lb-in iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lb-x{position:absolute;top:-44px;right:0;width:36px;height:36px;display:grid;place-items:center;
+  color:#fff;font-size:21px;line-height:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32)}
+.lb-x:hover{background:rgba(255,255,255,.24)}
+
+/* ---------- motion ----------
+   Hidden state is scoped to html.js, which the script adds to itself, so a
+   script that never runs can never leave the shop looking empty. */
+.js .rv{opacity:0;transform:translateY(13px);transition:opacity .45s ease,transform .45s cubic-bezier(.22,.7,.3,1)}
+.js .rv.in{opacity:1;transform:none}
+.shotwrap img{opacity:0;transition:opacity .4s ease}
+.shotwrap img.ok{opacity:1}
+.bagpip.pop{animation:pippop .42s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes pippop{0%{transform:scale(1)}38%{transform:scale(1.55)}100%{transform:scale(1)}}
+.fly{position:fixed;z-index:190;width:13px;height:13px;border-radius:50%;background:var(--yellow);
+  pointer-events:none;box-shadow:0 0 0 3px rgba(255,194,32,.3);
+  transition:transform .6s cubic-bezier(.45,.05,.55,1),opacity .6s ease}
+.btn{transition:transform .12s ease}
+.btn:active{transform:scale(.975)}
+.card{transition:transform .18s ease}
+.card:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){
+  .js .rv{opacity:1;transform:none;transition:none}
+  .card:hover{transform:none}
+  .shotwrap img{opacity:1;transition:none}
+  .film .vid{transition:none}
+}
 </style>
 
 <!-- filled product illustrations; tints come from --c1/--c2/--c3 per product -->
@@ -636,17 +700,41 @@ a{color:inherit;text-decoration:none}
   <div class="hdr-2"><div class="shell hdr-2-in" id="nav"></div></div>
 </header>
 
+<section class="film" id="film" aria-label="Inside TMT Supermarket">
+  <div class="vid">
+    <video id="filmvid" poster="shop-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="shop.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="scrim"></div>
+  <div class="shell">
+    <span class="eb">Muyenga and Bukoto</span>
+    <h2>The best is what we are all about.</h2>
+    <p>Two branches, stocked every morning, open seven days a week.</p>
+    <div class="acts">
+      <a class="btn btn-y" href="#/shop">Start shopping</a>
+      <a class="watch" href="https://wa.me/256780587279" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+    </div>
+    <div class="facts">
+      <div><b>2</b><span>Branches</span></div>
+      <div><b>90 min</b><span>Delivery</span></div>
+      <div><b>45 min</b><span>Collection</span></div>
+      <div><b>7 days</b><span>Open</span></div>
+    </div>
+  </div>
+</section>
+
 <main id="app"></main>
 
 <div class="info"><div class="shell info-in">
   <span><b>90-minute delivery</b> across Kampala</span>
-  <span><b>MTN &amp; Airtel Money</b> — approve on your phone</span>
+  <span><b>MTN &amp; Airtel Money</b> approved on your phone</span>
   <span><b>Collect in 45 minutes</b> at either branch</span>
   <span><b>Free delivery</b> over UGX 150,000</span>
 </div></div>
 
 <footer class="ft"><div class="shell ft-in">
-  <div><b>TMT Supermarket</b> — The best is what we are all about.</div>
+  <div><b>TMT Supermarket</b>. The best is what we are all about.</div>
   <div class="cols">
     <span>Tank Hill Road, <b>Muyenga</b></span>
     <span>Old Kira Road, <b>Bukoto</b></span>
@@ -667,9 +755,14 @@ a{color:inherit;text-decoration:none}
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Approve payment"><div class="mc" id="mc"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Inside TMT Supermarket">
+  <div class="lb-in"><button class="lb-x" id="lbx" aria-label="Close video">&times;</button><span id="lbin"></span></div>
+</div>
 <script>
 (function () {
   "use strict";
+
+  document.documentElement.classList.add("js");
 
   /* ================= catalogue ================= */
 
@@ -839,7 +932,7 @@ a{color:inherit;text-decoration:none}
   function ill(p) {
     return '<span class="shotwrap">' +
       '<svg viewBox="0 0 200 200" style="' + tint(p.c) + '" aria-hidden="true"><use href="#' + p.il + '"/></svg>' +
-      '<img src="' + p.id + '.jpg" alt="" loading="lazy" onerror="this.remove()">' +
+      '<img src="' + p.id + '.jpg" alt="" loading="lazy" onload="this.classList.add(\x27ok\x27)" onerror="this.remove()">' +
     '</span>';
   }
 
@@ -886,7 +979,7 @@ a{color:inherit;text-decoration:none}
         ? '<div class="stepper"><button data-dec="' + p.id + '" aria-label="Remove one">−</button><span class="q">' + q + '</span><button data-inc="' + p.id + '" aria-label="Add one">+</button></div>'
         : '<button class="btn btn-y btn-w" data-add="' + p.id + '">Add</button>');
 
-    return '<article class="card">' +
+    return '<article class="card rv">' +
       '<div class="shot" data-go="#/p/' + p.id + '" role="link" tabindex="0" aria-label="' + esc(p.name) + '">' + flag + ill(p) + '</div>' +
       '<div class="body">' +
         '<div class="pr"><span class="cur">UGX</span><span class="now">' + n(p.price) + '</span>' +
@@ -928,7 +1021,7 @@ a{color:inherit;text-decoration:none}
         '<div class="pbig">' +
           '<span class="burst">Save up to 25% this week</span>' +
           '<h2>Your whole shop, delivered in 90 minutes.</h2>' +
-          '<p>Picked by hand at Muyenga or Bukoto and driven to your gate. Pay with Mobile Money — no cash at the door.</p>' +
+          '<p>Picked by hand at Muyenga or Bukoto and driven to your gate. Pay with Mobile Money. No cash at the door.</p>' +
           '<a class="btn btn-y" href="#/shop">Shop all departments</a>' +
         '</div>' +
         '<div class="promo-side">' +
@@ -1060,7 +1153,7 @@ a{color:inherit;text-decoration:none}
             '<div><span>Bukoto</span><span>' + sw[STOCK[p.id].bukoto] + '</span></div>' +
             '<div><span>Picked at</span><span>' + BRANCH[S.branch].name + '</span></div>' +
           '</div>' +
-          (out ? '<p class="about" style="font-size:12.5px">In stock at ' + BRANCH[other].name + ' — switch branches in the header to add it.</p>' : '') +
+          (out ? '<p class="about" style="font-size:12.5px">In stock at ' + BRANCH[other].name + '. Switch branches in the header to add it.</p>' : '') +
         '</div>' +
         '<aside class="buybox">' +
           '<div class="p">' + ugx(p.price) + '</div>' +
@@ -1131,10 +1224,10 @@ a{color:inherit;text-decoration:none}
                 '<div class="fld"><label>Full name</label><input placeholder="e.g. Nakato Sarah"></div>' +
                 '<div class="fld"><label>Phone</label><input placeholder="0780 000 000" inputmode="tel"></div>' +
                 '<div class="fld" style="grid-column:1/-1"><label>Delivery zone</label><select id="zone">' +
-                  ZONES.map(function (z, i) { return '<option value="' + i + '"' + (i === S.zone ? " selected" : "") + '>' + z[0] + ' — ' + ugx(z[1]) + '</option>'; }).join("") +
+                  ZONES.map(function (z, i) { return '<option value="' + i + '"' + (i === S.zone ? " selected" : "") + '>' + z[0] + ' &middot; ' + ugx(z[1]) + '</option>'; }).join("") +
                 '</select></div>' +
                 '<div class="fld" style="grid-column:1/-1"><label>Where exactly?</label>' +
-                '<textarea placeholder="Plot, road and the gate colour — our riders find it faster that way"></textarea></div>' +
+                '<textarea placeholder="Plot, road and the gate colour so our riders find you faster"></textarea></div>' +
               '</div>' +
               '<div class="fld" style="margin-top:16px"><label>Delivery window</label></div>' +
               '<div class="slots">' + SLOTS.map(function (s, i) {
@@ -1145,7 +1238,7 @@ a{color:inherit;text-decoration:none}
                 '<div class="fld"><label>Full name</label><input placeholder="e.g. Nakato Sarah"></div>' +
                 '<div class="fld"><label>Phone</label><input placeholder="0780 000 000" inputmode="tel"></div>' +
                 '<div class="fld" style="grid-column:1/-1"><label>Collecting from</label>' +
-                '<input value="' + b.name + ' — ' + b.road + '" readonly></div>' +
+                '<input value="' + b.name + ', ' + b.road + '" readonly></div>' +
               '</div>') +
         '</div>' +
 
@@ -1153,9 +1246,9 @@ a{color:inherit;text-decoration:none}
           '<h3><i>2</i>How would you like to pay?</h3>' +
           '<div class="opts">' +
             opt("pay","mtn","MTN Mobile Money","We send a prompt to your phone. Approve it and we start picking.","MTN","pl-m") +
-            opt("pay","airtel","Airtel Money","Same thing — approve the push on your handset.","AIRTEL","pl-a") +
+            opt("pay","airtel","Airtel Money","Same thing. Approve the push on your handset.","AIRTEL","pl-a") +
             opt("pay","card","Visa or Mastercard","3-D Secure, processed by our payment partner.","CARD","pl-c") +
-            opt("pay","cash","Cash on " + (S.ful === "collect" ? "collection" : "delivery"),"Please have it counted — our riders don't carry float.","CASH","pl-h") +
+            opt("pay","cash","Cash on " + (S.ful === "collect" ? "collection" : "delivery"),"Please have it counted. Our riders don't carry float.","CASH","pl-h") +
           '</div>' +
           (S.pay === "mtn" || S.pay === "airtel"
             ? '<div class="flds"><div class="fld"><label>' + (S.pay === "mtn" ? "MTN" : "Airtel") + ' number to charge</label>' +
@@ -1190,7 +1283,7 @@ a{color:inherit;text-decoration:none}
       [o.ful === "collect" ? "Collected" : "Delivered", o.slot]
     ];
     return '<div class="shell"><div class="done">' +
-      '<h1>Thank you — we\'re on it.</h1>' +
+      '<h1>Thank you. We\'re on it.</h1>' +
       '<div class="oid">Order ' + o.id + '</div>' +
       '<p class="ms">' + (o.ful === "collect"
         ? "Your basket is being picked at " + b.name + ". We'll text you the moment it's ready at the collection desk."
@@ -1306,7 +1399,10 @@ a{color:inherit;text-decoration:none}
 
     var c = count(), pip = $("#pip");
     pip.textContent = c; pip.hidden = c === 0;
-    $("#bagtot").textContent = ugx(subtotal());
+    countTo($("#bagtot"), subtotal());
+    bumpPip(pip, c);
+    syncFilm(r.v);
+    reveal();
     $("#branch").value = S.branch;
     var qf = $("#q"); if (qf && qf.value !== S.q) qf.value = S.q;
 
@@ -1396,7 +1492,7 @@ a{color:inherit;text-decoration:none}
     if (link) { e.preventDefault(); nav(link.getAttribute("href")); return; }
 
     var go = t.closest("[data-go]"); if (go) { nav(go.dataset.go); return; }
-    var add = t.closest("[data-add]"); if (add) { setQty(add.dataset.add, (S.cart[add.dataset.add] || 0) + 1); toast(byId(add.dataset.add).name + " added"); return; }
+    var add = t.closest("[data-add]"); if (add) { fly(add); setQty(add.dataset.add, (S.cart[add.dataset.add] || 0) + 1); toast(byId(add.dataset.add).name + " added"); return; }
     var inc = t.closest("[data-inc]"); if (inc) { setQty(inc.dataset.inc, (S.cart[inc.dataset.inc] || 0) + 1); return; }
     var dec = t.closest("[data-dec]"); if (dec) { setQty(dec.dataset.dec, (S.cart[dec.dataset.dec] || 0) - 1); return; }
 
@@ -1445,6 +1541,125 @@ a{color:inherit;text-decoration:none}
   });
 
   window.addEventListener("hashchange", function () { forced = null; openDrawer(false); paint(true); });
+
+
+  /* ================= motion =================
+     Scroll reveal is plain geometry on a debounced scroll handler plus a
+     self-cancelling interval, deliberately NOT IntersectionObserver: the
+     cards are rebuilt on every paint, and an observer that misses the new
+     nodes leaves the shelves invisible with no error anywhere. */
+
+  function calm() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  var rvPoll = null, rvT = 0;
+
+  function reveal() {
+    var els = document.querySelectorAll(".rv"), vh = window.innerHeight, left = 0, i = 0;
+    for (var k = 0; k < els.length; k++) {
+      var el = els[k];
+      if (el.classList.contains("in")) continue;
+      var r = el.getBoundingClientRect();
+      if (r.top < vh * 0.94 && r.bottom > 0) {
+        el.style.transitionDelay = (Math.min(i % 4, 3) * 55) + "ms";
+        i++; el.classList.add("in");
+      } else left++;
+    }
+    if (!left && rvPoll) { clearInterval(rvPoll); rvPoll = null; }
+    if (left && !rvPoll) rvPoll = setInterval(reveal, 400);
+  }
+
+  window.addEventListener("scroll", function () {
+    clearTimeout(rvT); rvT = setTimeout(reveal, 70);
+  }, { passive: true });
+  window.addEventListener("resize", function () {
+    clearTimeout(rvT); rvT = setTimeout(reveal, 70);
+  }, { passive: true });
+
+  /* ---------- the film band ---------- */
+
+  var filmUp = false;
+
+  function thinPipe() {
+    var c = navigator.connection;
+    if (!c) return false;
+    if (c.saveData) return true;
+    return !!(c.effectiveType && !/4g/.test(c.effectiveType));
+  }
+
+  /* The hero plays by itself. No iframe, no third party, no scroll needed:
+     a plain muted looping video element the browser starts on its own. */
+  function mountFilm() {
+    var v = $("#filmvid");
+    if (!v) return;
+    /* Only a metered connection holds the poster. The hero has to move:
+       that is the whole point of it. */
+    if (thinPipe()) {
+      try { v.removeAttribute("autoplay"); v.pause(); } catch (e) {}
+      return;
+    }
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { /* refused: the poster stands in */ });
+  }
+
+  function syncFilm(view) {
+    var band = $("#film"); if (!band) return;
+    var on = view === "home";
+    band.classList.toggle("show", on);
+    var v = $("#filmvid"); if (!v) return;
+    if (on) mountFilm();
+    else { try { v.pause(); } catch (e) {} }
+  }
+
+  /* ---------- basket feedback ---------- */
+
+  function fly(src) {
+    if (calm() || !src) return;
+    var bag = $("#bag"); if (!bag) return;
+    var a = src.getBoundingClientRect(), b = bag.getBoundingClientRect();
+    if (!a.width || !b.width) return;
+    var d = document.createElement("div");
+    d.className = "fly";
+    d.style.left = (a.left + a.width / 2 - 6) + "px";
+    d.style.top = (a.top + a.height / 2 - 6) + "px";
+    document.body.appendChild(d);
+    var dx = (b.left + b.width / 2) - (a.left + a.width / 2);
+    var dy = (b.top + b.height / 2) - (a.top + a.height / 2);
+    setTimeout(function () {
+      d.style.transform = "translate(" + dx + "px," + dy + "px) scale(.42)";
+      d.style.opacity = "0";
+    }, 20);
+    setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 760);
+  }
+
+  var seenCount = -1;
+
+  function bumpPip(pip, c) {
+    if (!pip) return;
+    if (seenCount >= 0 && c > seenCount && !calm()) {
+      pip.classList.remove("pop");
+      void pip.offsetWidth;
+      pip.classList.add("pop");
+    }
+    seenCount = c;
+  }
+
+  var ctTok = 0;
+
+  function countTo(el, to) {
+    if (!el) return;
+    var from = parseInt(String(el.textContent || "").replace(/\D/g, ""), 10);
+    if (isNaN(from)) from = 0;
+    if (from === to || calm()) { el.textContent = ugx(to); return; }
+    var tok = ++ctTok, t0 = Date.now(), dur = 420;
+    (function step() {
+      if (tok !== ctTok) return;
+      var k = Math.min(1, (Date.now() - t0) / dur);
+      el.textContent = ugx(Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) setTimeout(step, 24); else el.textContent = ugx(to);
+    })();
+  }
 
   paint();
 })();
