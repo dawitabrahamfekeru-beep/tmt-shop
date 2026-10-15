@@ -1582,10 +1582,12 @@ a{color:inherit;text-decoration:none}
   var filmUp = false;
 
   function thinPipe() {
+    /* ONLY an explicit Save Data request holds the hero back. Chrome guesses
+       effectiveType from round-trip latency, and a high-latency link in East
+       Africa reports 3g on perfectly good bandwidth. That guess froze this
+       video for exactly the audience the guard was meant to protect. */
     var c = navigator.connection;
-    if (!c) return false;
-    if (c.saveData) return true;
-    return !!(c.effectiveType && !/4g/.test(c.effectiveType));
+    return !!(c && c.saveData);
   }
 
   /* The hero plays by itself. No iframe, no third party, no scroll needed:
